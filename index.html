@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankit ❤️ Ankita</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    color: white;
+}
+
+/* Container */
+.container {
+    padding: 20px;
+}
+
+/* Image */
+img {
+    width: 100px;
+    height: 120px;
+    border-radius: 80%;
+    border: 4px solid white;
+    margin-top: 20px;
+
+    object-fit: contain;   /* full image dikhegi */
+    background: rgb(201, 109, 109);     /* empty space hide karne ke liye */
+
+    transform: scale(1.6); /* 🔥 zoom feel */
+}
+
+/* Heart */
+.heart {
+    font-size: 50px;
+    animation: beat 1s infinite;
+}
+
+@keyframes beat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Button */
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    background: white;
+    color: #ff4d6d;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+/* Hidden Surprise */
+#surprise {
+    display: none;
+    margin-top: 20px;
+}
+
+/* Typing text */
+#typing {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Ankit ❤️ Ankita</h1>
+
+    <!-- Photo -->
+    <img src="ankita.jpg" alt="Ankita" width="100px">
+
+    <div class="heart">❤️</div>
+
+    <!-- Typing text -->
+    <div id="typing"></div>
+
+    <!-- Button -->
+    <button onclick="showSurprise()">Open Surprise 🎁</button>
+
+    <!-- Surprise section -->
+    <div id="surprise">
+        <p>
+            Ankita, tum meri life ki sabse special person ho 💖  <br>
+            Meri shuggi… tu sirf meri girlfriend nahi hai,<br>
+            tu meri aadat ban chuki hai… aur aadate chhodi nahi jaati ❤️"<br>
+            "Babu, jab tu hasta hai na…<br>
+            sach bolu to us moment me mujhe aur kuch nahi chahiye 😊"<br>
+            "Meri sona… tu paas ho ya door,<br>
+            mera dil hamesha tere hi paas rehta hai 💞"<br>
+        </p>
+    </div>
+
+</div>
+
+<!-- Music -->
+<audio id="music" loop>
+    <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// Typing Animation
+const text = "I Love You meri Shugiiiiii ❤️";
+let i = 0;
+
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 100);
+    }
+}
+
+typeWriter();
+
+// Surprise + Music
+function showSurprise() {
+    document.getElementById("surprise").style.display = "block";
+    document.getElementById("music").play();
+}
+const music = document.getElementById("music");
+
+function showSurprise() {
+    document.getElementById("surprise").style.display = "block";
+
+    music.currentTime = 50; // ⏱️ 0:50 se start
+    music.play();
+}
+
+</script>
+
+</body>
+</html>
