@@ -9,97 +9,131 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    text-align: center;
     background: linear-gradient(to right, #ff758c, #ff7eb3);
     color: white;
+    overflow: hidden;
 }
 
-/* Container */
-.container {
+/* Layout */
+.main {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: space-around;
     padding: 20px;
 }
 
-/* Image */
-img {
-    width: 100px;
-    height: 120px;
-    border-radius: 80%;
-    border: 4px solid white;
-    margin-top: 20px;
-
-    object-fit: contain;   /* full image dikhegi */
-    background: rgb(201, 109, 109);     /* empty space hide karne ke liye */
-
-    transform: scale(1.6); /* 🔥 zoom feel */
+/* Left Image */
+.left img {
+    width: 280px;
+    height: 350px;
+    border-radius: 20px;
+    border: 5px solid white;
+    object-fit: cover;
+    animation: floatImg 3s ease-in-out infinite;
 }
 
-/* Heart */
-.heart {
-    font-size: 50px;
-    animation: beat 1s infinite;
+/* Floating image animation */
+@keyframes floatImg {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
 }
 
-@keyframes beat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+/* Right Content */
+.right {
+    max-width: 400px;
 }
 
-/* Button */
+/* Title */
+h1 {
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px white, 0 0 20px pink;
+}
+
+/* Typing */
+#typing {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+/* Buttons */
 button {
     padding: 12px 20px;
+    margin-top: 15px;
     border: none;
     border-radius: 25px;
     background: white;
     color: #ff4d6d;
-    font-size: 16px;
-    margin-top: 20px;
     cursor: pointer;
 }
 
-/* Hidden Surprise */
+/* Surprise */
 #surprise {
     display: none;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
-/* Typing text */
-#typing {
+/* Floating hearts */
+.hearts span {
+    position: absolute;
+    bottom: -50px;
     font-size: 20px;
-    font-weight: bold;
-    margin-top: 15px;
+    animation: float 8s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* Counter */
+#counter {
+    margin-top: 10px;
+    font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- Floating hearts -->
+<div class="hearts">
+    <span>❤️</span>
+    <span>💖</span>
+    <span>💕</span>
+    <span>💘</span>
+    <span>❤️</span>
+    <span>💖</span>
+</div>
 
-    <h1>Ankit ❤️ Ankita</h1>
+<div class="main">
 
-    <!-- Photo -->
-    <img src="ankita.jpg" alt="Ankita" width="100px">
+    <!-- Left Side -->
+    <div class="left">
+        <img src="ankita.jpg" alt="Ankita">
+    </div>
 
-    <div class="heart">❤️</div>
+    <!-- Right Side -->
+    <div class="right">
+        <h1>Ankit ❤️ Ankita</h1>
 
-    <!-- Typing text -->
-    <div id="typing"></div>
+        <div id="typing"></div>
 
-    <!-- Button -->
-    <button onclick="showSurprise()">Open Surprise 🎁</button>
+        <p id="counter"></p>
 
-    <!-- Surprise section -->
-    <div id="surprise">
-        <p>
-            Ankita, tum meri life ki sabse special person ho 💖  <br>
-            Meri shuggi… tu sirf meri girlfriend nahi hai,<br>
-            tu meri aadat ban chuki hai… aur aadate chhodi nahi jaati ❤️"<br>
-            "Babu, jab tu hasta hai na…<br>
-            sach bolu to us moment me mujhe aur kuch nahi chahiye 😊"<br>
-            "Meri sona… tu paas ho ya door,<br>
-            mera dil hamesha tere hi paas rehta hai 💞"<br>
-        </p>
+        <button onclick="showSurprise()">Open Surprise 🎁</button>
+
+        <div id="surprise">
+            <p>
+                Meri shuggi… tu meri aadat ban chuki hai ❤️<br>
+                Babu, jab tu hasta hai na… sab perfect lagta hai 😊<br>
+                Meri sona… tu hi meri duniya hai 💞
+            </p>
+
+            <button onclick="loveQuestion()">Stay Forever? 💍</button>
+            <p id="answer"></p>
+        </div>
     </div>
 
 </div>
@@ -111,33 +145,60 @@ button {
 
 <script>
 
-// Typing Animation
+// Typing
 const text = "I Love You meri Shugiiiiii ❤️";
 let i = 0;
-
 function typeWriter() {
     if (i < text.length) {
         document.getElementById("typing").innerHTML += text.charAt(i);
         i++;
-        setTimeout(typeWriter, 100);
+        setTimeout(typeWriter, 80);
     }
 }
-
 typeWriter();
 
-// Surprise + Music
-function showSurprise() {
-    document.getElementById("surprise").style.display = "block";
-    document.getElementById("music").play();
-}
+// Music
 const music = document.getElementById("music");
 
+// Fade in
+function fadeIn(audio) {
+    audio.volume = 0;
+    let vol = 0;
+    const fade = setInterval(() => {
+        if (vol < 1) {
+            vol += 0.05;
+            audio.volume = vol;
+        } else {
+            clearInterval(fade);
+        }
+    }, 200);
+}
+
+// Show Surprise
 function showSurprise() {
     document.getElementById("surprise").style.display = "block";
 
-    music.currentTime = 50; // ⏱️ 0:50 se start
+    music.currentTime = 50;
     music.play();
+    fadeIn(music);
 }
+
+// Love button
+function loveQuestion() {
+    document.getElementById("answer").innerText =
+        "Hamesha ❤️ (No option 😄)";
+}
+
+// Counter
+const startDate = new Date("2026-02-25");
+setInterval(() => {
+    const now = new Date();
+    const diff = now - startDate;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    document.getElementById("counter").innerText =
+        "Together for " + days + " days ❤️";
+}, 1000);
 
 </script>
 
